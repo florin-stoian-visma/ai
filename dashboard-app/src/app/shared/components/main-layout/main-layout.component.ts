@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,7 +47,13 @@ interface NavItem {
             <mat-icon>menu</mat-icon>
           </button>
           <span class="toolbar-spacer"></span>
-          <span class="user-info">{{ userName() }}</span>
+          <div class="user-section">
+            <span class="user-info">{{ userName() }}</span>
+            <button mat-button class="logout-button" (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              Logout
+            </button>
+          </div>
         </mat-toolbar>
 
         <div class="content">
@@ -123,9 +129,27 @@ interface NavItem {
       flex: 1 1 auto;
     }
 
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
     .user-info {
       font-size: 14px;
       color: var(--mat-sys-on-surface-variant);
+    }
+
+    .logout-button {
+      color: var(--mat-sys-on-surface-variant);
+      font-size: 14px;
+
+      .mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+      }
     }
 
     .content {
@@ -148,6 +172,8 @@ export class MainLayoutComponent {
   sidenavOpened = signal(true);
   userName = signal('Hugo Walldnö');
 
+  constructor(private router: Router) {}
+
   navItems: NavItem[] = [
     { label: 'Overview', icon: 'dashboard', route: '/dashboard' },
     { label: 'Customers', icon: 'people', route: '/customers' },
@@ -163,5 +189,9 @@ export class MainLayoutComponent {
 
   toggleSidenav(): void {
     this.sidenavOpened.update(value => !value);
+  }
+
+  logout(): void {
+    this.router.navigate(['/setup']);
   }
 }
