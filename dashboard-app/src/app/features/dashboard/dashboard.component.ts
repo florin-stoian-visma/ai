@@ -119,8 +119,46 @@ import { TimeRegistrationWidgetComponent } from './widgets/time-registration-wid
 
     .widget-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 24px;
+      grid-auto-flow: dense;
+
+      app-today-overview-widget {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+      }
+
+      app-ai-assistant-widget {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      app-financial-overview-widget {
+        grid-column: 2;
+        grid-row: 2;
+        margin-top: -12px;
+      }
+
+      app-projects-pipeline-widget {
+        grid-column: 1 / span 2;
+        grid-row: 3;
+      }
+
+      @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        
+        app-today-overview-widget,
+        app-ai-assistant-widget,
+        app-financial-overview-widget,
+        app-projects-pipeline-widget {
+          grid-column: 1;
+          grid-row: auto;
+        }
+
+        app-financial-overview-widget {
+          margin-top: 0;
+        }
+      }
     }
 
     .widget-placeholder {

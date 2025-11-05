@@ -58,17 +58,15 @@ interface Message {
     .chat-container {
       display: flex;
       flex-direction: column;
-      height: 100%;
     }
 
     .messages-list {
-      flex: 1;
       overflow-y: auto;
       padding: 16px 0;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      max-height: 250px;
+      gap: 12px;
+      max-height: 150px;
 
       .message {
         display: flex;

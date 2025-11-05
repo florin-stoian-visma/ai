@@ -17,7 +17,7 @@ import { MatCardModule } from '@angular/material/card';
   `,
   styles: [`
     .widget-card {
-      height: 100%;
+      height: auto;
       display: flex;
       flex-direction: column;
       
