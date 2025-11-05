@@ -12,6 +12,7 @@ import { TodayOverviewWidgetComponent } from './widgets/today-overview-widget.co
 import { ProjectsPipelineWidgetComponent } from './widgets/projects-pipeline-widget.component';
 import { AiAssistantWidgetComponent } from './widgets/ai-assistant-widget.component';
 import { TimeRegistrationWidgetComponent } from './widgets/time-registration-widget.component';
+import { InvoicingWidgetComponent } from './widgets/invoicing-widget.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,8 @@ import { TimeRegistrationWidgetComponent } from './widgets/time-registration-wid
     TodayOverviewWidgetComponent,
     ProjectsPipelineWidgetComponent,
     AiAssistantWidgetComponent,
-    TimeRegistrationWidgetComponent
+    TimeRegistrationWidgetComponent,
+    InvoicingWidgetComponent
   ],
   template: `
     <div class="dashboard-container">
@@ -57,6 +59,9 @@ import { TimeRegistrationWidgetComponent } from './widgets/time-registration-wid
               }
               @case ('time-registration') {
                 <app-time-registration-widget />
+              }
+              @case ('invoicing') {
+                <app-invoicing-widget />
               }
               @default {
                 <div class="widget-placeholder">
@@ -143,18 +148,32 @@ import { TimeRegistrationWidgetComponent } from './widgets/time-registration-wid
         grid-row: 3;
       }
 
+      app-time-registration-widget {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+      }
+
+      app-invoicing-widget {
+        grid-column: 2;
+        grid-row: 2;
+        margin-top: -12px;
+      }
+
       @media (max-width: 900px) {
         grid-template-columns: 1fr;
         
         app-today-overview-widget,
         app-ai-assistant-widget,
         app-financial-overview-widget,
-        app-projects-pipeline-widget {
+        app-projects-pipeline-widget,
+        app-time-registration-widget,
+        app-invoicing-widget {
           grid-column: 1;
           grid-row: auto;
         }
 
-        app-financial-overview-widget {
+        app-financial-overview-widget,
+        app-invoicing-widget {
           margin-top: 0;
         }
       }

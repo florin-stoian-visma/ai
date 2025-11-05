@@ -23,7 +23,8 @@ export class WidgetLayoutService {
 
   private softwareConsultingDefaultWidgets: WidgetConfig[] = [
     { id: 'time-registration', type: 'time-registration', title: 'Time Registration', position: 0, visible: true },
-    { id: 'ai-assistant', type: 'ai-assistant', title: 'AI Assistant', position: 1, visible: true }
+    { id: 'ai-assistant', type: 'ai-assistant', title: 'AI Assistant', position: 1, visible: true },
+    { id: 'invoicing', type: 'invoicing', title: 'Invoicing', position: 2, visible: true }
   ];
 
   getDefaultLayout(businessType: BusinessType): WidgetConfig[] {
