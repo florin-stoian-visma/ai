@@ -151,7 +151,6 @@ export class MainLayoutComponent {
     { label: 'Overview', icon: 'dashboard', route: '/dashboard' },
     { label: 'Customers', icon: 'people', route: '/customers' },
     { label: 'Checklists', icon: 'checklist', route: '/checklists' },
-    { label: 'KYC', icon: 'verified_user', route: '/kyc' },
     { label: 'Contacts', icon: 'contacts', route: '/contacts' },
     { label: 'Time registration', icon: 'schedule', route: '/time-registration' },
     { label: 'Outlay registration', icon: 'receipt_long', route: '/outlay' },
