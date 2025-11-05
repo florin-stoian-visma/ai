@@ -87,14 +87,14 @@ interface TimeEntry {
                 <mat-list-item>
                   <div class="entry-content">
                     <div class="entry-header">
-                      <strong>{{ entry.customer }}</strong>
-                      <span class="duration">{{ formatDuration(entry.duration!) }}</span>
-                    </div>
-                    <div class="entry-details">
-                      {{ entry.description }}
-                    </div>
-                    <div class="entry-time">
-                      {{ entry.startTime | date:'HH:mm' }} - {{ entry.endTime | date:'HH:mm' }}
+                      <div class="entry-left">
+                        <strong>{{ entry.customer }}</strong>
+                        <span class="entry-details">{{ entry.description }}</span>
+                      </div>
+                      <div class="entry-right">
+                        <span class="duration">{{ formatDuration(entry.duration!) }}</span>
+                        <span class="entry-time">{{ entry.startTime | date:'HH:mm' }} - {{ entry.endTime | date:'HH:mm' }}</span>
+                      </div>
                     </div>
                   </div>
                 </mat-list-item>
@@ -234,29 +234,45 @@ interface TimeEntry {
             .entry-header {
               display: flex;
               justify-content: space-between;
-              align-items: center;
+              align-items: flex-start;
               margin-bottom: 4px;
 
-              strong {
-                font-size: 14px;
-                color: var(--mat-sys-on-surface) !important;
+              .entry-left {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                strong {
+                  font-size: 14px;
+                  color: var(--mat-sys-on-surface) !important;
+                }
               }
 
-              .duration {
-                font-weight: 500;
-                color: var(--mat-sys-primary) !important;
+              .entry-right {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
+                margin-left: 16px;
+
+                .duration {
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: var(--mat-sys-primary) !important;
+                }
+
+                .entry-time {
+                  font-size: 12px;
+                  color: var(--mat-sys-on-surface-variant) !important;
+                }
               }
             }
 
             .entry-details {
               font-size: 14px;
               color: var(--mat-sys-on-surface-variant) !important;
-              margin-bottom: 4px;
-            }
-
-            .entry-time {
-              font-size: 12px;
-              color: var(--mat-sys-on-surface-variant) !important;
+              padding-left: 0;
             }
           }
         }
