@@ -126,6 +126,20 @@ interface TimeEntry {
       justify-content: space-between;
       align-items: center;
 
+      button {
+        background-color: white !important;
+        color: #7939b4 !important;
+        font-weight: 500;
+
+        mat-icon {
+          color: #7939b4;
+        }
+
+        &:hover {
+          background-color: #f3e5f5 !important;
+        }
+      }
+
       .timer-display {
         display: flex;
         align-items: center;
@@ -201,15 +215,21 @@ interface TimeEntry {
         font-size: 14px;
       }
 
-      mat-list {
+      ::ng-deep mat-list {
         padding: 0;
 
         mat-list-item {
           border-bottom: 1px solid var(--mat-sys-outline-variant);
+          height: auto !important;
+
+          .mdc-list-item__content {
+            display: block !important;
+          }
 
           .entry-content {
             width: 100%;
             padding: 12px 0;
+            display: block !important;
 
             .entry-header {
               display: flex;
@@ -219,24 +239,24 @@ interface TimeEntry {
 
               strong {
                 font-size: 14px;
-                color: var(--mat-sys-on-surface);
+                color: var(--mat-sys-on-surface) !important;
               }
 
               .duration {
                 font-weight: 500;
-                color: var(--mat-sys-primary);
+                color: var(--mat-sys-primary) !important;
               }
             }
 
             .entry-details {
               font-size: 14px;
-              color: var(--mat-sys-on-surface-variant);
+              color: var(--mat-sys-on-surface-variant) !important;
               margin-bottom: 4px;
             }
 
             .entry-time {
               font-size: 12px;
-              color: var(--mat-sys-on-surface-variant);
+              color: var(--mat-sys-on-surface-variant) !important;
             }
           }
         }
@@ -256,6 +276,27 @@ interface TimeEntry {
           font-weight: 500;
         }
       }
+    }
+
+    ::ng-deep .cdk-overlay-pane {
+      z-index: 1000;
+    }
+
+    ::ng-deep .mat-mdc-select-panel {
+      background-color: white !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    ::ng-deep .mat-mdc-option {
+      background-color: white !important;
+    }
+
+    ::ng-deep .mat-mdc-option:hover {
+      background-color: #f5f5f5 !important;
+    }
+
+    ::ng-deep .mat-mdc-option.mat-mdc-option-active {
+      background-color: #e8e8e8 !important;
     }
   `]
 })
