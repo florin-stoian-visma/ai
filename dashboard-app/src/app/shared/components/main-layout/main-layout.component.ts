@@ -110,12 +110,13 @@ interface NavItem {
     }
 
     .toolbar {
-      background-color: var(--mat-sys-surface);
+      background-color: white;
       color: var(--mat-sys-on-surface);
       border-bottom: 1px solid var(--mat-sys-outline-variant);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .toolbar-spacer {
