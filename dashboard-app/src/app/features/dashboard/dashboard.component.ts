@@ -72,7 +72,6 @@ import { TimeRegistrationWidgetComponent } from './widgets/time-registration-wid
   `,
   styles: [`
     .dashboard-container {
-      height: 100%;
     }
     
     .loading {

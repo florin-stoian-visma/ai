@@ -129,8 +129,7 @@ interface NavItem {
 
     .content {
       padding: 24px;
-      height: calc(100vh - 64px);
-      overflow-y: auto;
+      min-height: calc(100vh - 64px);
     }
 
     @media (max-width: 768px) {
