@@ -72,23 +72,32 @@ interface Tip {
 
             @if (project.actionItems.length > 0) {
               <div class="action-items">
-                <strong>
-                  <mat-icon>notification_important</mat-icon>
-                  Action Required
-                </strong>
-                <div class="actions-list">
-                  @for (action of project.actionItems; track action.description) {
-                    <div class="action-item" [class]="'priority-' + action.priority">
-                      <mat-icon>{{ getActionIcon(action.type) }}</mat-icon>
-                      <div class="action-content">
-                        <span class="action-description">{{ action.description }}</span>
-                        @if (action.dueDate) {
-                          <span class="action-due">Due: {{ action.dueDate }}</span>
-                        }
-                      </div>
-                    </div>
-                  }
+                <div class="action-header" (click)="toggleActions(project.id)">
+                  <strong>
+                    <mat-icon [style.color]="hasCriticalAction(project) ? '#f44336' : '#ff9800'">
+                      notification_important
+                    </mat-icon>
+                    Action Required ({{ project.actionItems.length }})
+                  </strong>
+                  <mat-icon class="expand-icon" [class.expanded]="isActionsExpanded(project.id)">
+                    expand_more
+                  </mat-icon>
                 </div>
+                @if (isActionsExpanded(project.id)) {
+                  <div class="actions-list">
+                    @for (action of project.actionItems; track action.description) {
+                      <div class="action-item" [class]="'priority-' + action.priority">
+                        <mat-icon>{{ getActionIcon(action.type) }}</mat-icon>
+                        <div class="action-content">
+                          <span class="action-description">{{ action.description }}</span>
+                          @if (action.dueDate) {
+                            <span class="action-due">Due: {{ action.dueDate }}</span>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
               </div>
             }
           </div>
@@ -259,19 +268,42 @@ interface Tip {
         padding-top: 16px;
         border-top: 1px solid var(--mat-sys-outline-variant);
 
-        strong {
+        .action-header {
           display: flex;
+          justify-content: space-between;
           align-items: center;
-          gap: 4px;
-          margin-bottom: 12px;
-          font-size: 14px;
-          color: var(--mat-sys-on-surface);
+          cursor: pointer;
+          padding: 4px 0;
+          user-select: none;
 
-          mat-icon {
-            font-size: 18px;
-            width: 18px;
-            height: 18px;
-            color: #ff9800;
+          &:hover {
+            opacity: 0.8;
+          }
+
+          strong {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: var(--mat-sys-on-surface);
+
+            mat-icon {
+              font-size: 18px;
+              width: 18px;
+              height: 18px;
+            }
+          }
+
+          .expand-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            color: var(--mat-sys-on-surface-variant);
+            transition: transform 0.3s ease;
+
+            &.expanded {
+              transform: rotate(180deg);
+            }
           }
         }
 
@@ -279,6 +311,7 @@ interface Tip {
           display: flex;
           flex-direction: column;
           gap: 8px;
+          margin-top: 12px;
 
           .action-item {
             display: flex;
@@ -344,6 +377,7 @@ interface Tip {
 export class ProjectsPipelineWidgetComponent implements OnInit {
   activeProjects = signal<Project[]>([]);
   tips = signal<Tip[]>([]);
+  expandedActions = signal<Set<string>>(new Set());
 
   ngOnInit(): void {
     // Mock active projects
@@ -463,5 +497,25 @@ export class ProjectsPipelineWidgetComponent implements OnInit {
       case 'inspection': return 'fact_check';
       default: return 'task';
     }
+  }
+
+  toggleActions(projectId: string): void {
+    this.expandedActions.update(expanded => {
+      const newSet = new Set(expanded);
+      if (newSet.has(projectId)) {
+        newSet.delete(projectId);
+      } else {
+        newSet.add(projectId);
+      }
+      return newSet;
+    });
+  }
+
+  isActionsExpanded(projectId: string): boolean {
+    return this.expandedActions().has(projectId);
+  }
+
+  hasCriticalAction(project: Project): boolean {
+    return project.actionItems.some(action => action.priority === 'high');
   }
 }
