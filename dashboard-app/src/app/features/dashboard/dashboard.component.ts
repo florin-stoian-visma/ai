@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BusinessDetectionService } from '../../core/services/business-detection.service';
 import { WidgetLayoutService } from '../../core/services/widget-layout.service';
@@ -17,7 +17,6 @@ import { TimeRegistrationWidgetComponent } from './widgets/time-registration-wid
   selector: 'app-dashboard',
   imports: [
     CommonModule,
-    MatDialogModule,
     MatProgressSpinnerModule,
     FinancialOverviewWidgetComponent,
     TodayOverviewWidgetComponent,
@@ -153,7 +152,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private businessDetectionService: BusinessDetectionService,
     private widgetLayoutService: WidgetLayoutService,
-    private dialog: MatDialog
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -168,14 +167,14 @@ export class DashboardComponent implements OnInit {
     const existingProfile = this.businessDetectionService.getBusinessProfile();
 
     if (existingProfile && existingProfile.confirmed) {
-      // User has already confirmed their business type
+      // Load existing profile
       this.businessProfile.set(existingProfile);
       this.widgetLayoutService.loadLayout(existingProfile.businessType);
       this.loadWidgets();
       this.loading.set(false);
     } else {
-      // First-time user or unconfirmed profile - simulate org number lookup
-      await this.detectAndConfirmBusinessType();
+      // Navigate to setup page for business confirmation
+      this.router.navigate(['/setup']);
     }
   }
 
@@ -194,39 +193,5 @@ export class DashboardComponent implements OnInit {
       default:
         return 'Unknown';
     }
-  }
-
-  private async detectAndConfirmBusinessType(): Promise<void> {
-    // Simulate detecting business type from organisationsnummer
-    // In production, this would be from user authentication/registration
-    const mockOrgNumber = '556789-1234'; // Default to carpentry for demo
-
-    this.businessDetectionService.detectBusinessType(mockOrgNumber).subscribe({
-      next: (detectedProfile) => {
-        this.openConfirmationDialog(detectedProfile);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
-  }
-
-  private openConfirmationDialog(detectedProfile: BusinessProfile): void {
-    const dialogRef = this.dialog.open(BusinessConfirmationDialogComponent, {
-      data: detectedProfile,
-      disableClose: true,
-      width: '500px'
-    });
-
-    dialogRef.afterClosed().subscribe((confirmedProfile: BusinessProfile) => {
-      if (confirmedProfile) {
-        confirmedProfile.confirmed = true;
-        this.businessDetectionService.saveBusinessProfile(confirmedProfile);
-        this.businessProfile.set(confirmedProfile);
-        this.widgetLayoutService.loadLayout(confirmedProfile.businessType);
-        this.loadWidgets();
-      }
-      this.loading.set(false);
-    });
   }
 }

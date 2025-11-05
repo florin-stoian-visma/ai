@@ -83,11 +83,17 @@ interface ChartData {
     }
 
     .chart-container {
+      max-height: 250px;
+
       h4 {
         margin: 0 0 16px 0;
         font-size: 16px;
         font-weight: 500;
         color: var(--mat-sys-on-surface);
+      }
+
+      ngx-charts-line-chart {
+        height: 200px;
       }
     }
 

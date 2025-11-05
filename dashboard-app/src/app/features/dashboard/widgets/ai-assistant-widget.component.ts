@@ -68,7 +68,7 @@ interface Message {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      max-height: 400px;
+      max-height: 250px;
 
       .message {
         display: flex;

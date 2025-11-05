@@ -27,8 +27,8 @@ interface NavItem {
   template: `
     <mat-sidenav-container class="layout-container">
       <mat-sidenav mode="side" [opened]="sidenavOpened()" class="sidenav">
-        <div class="sidenav-header">
-          <h2>Spirts</h2>
+        <div class="sidebar-header">
+          <h2>Spiris</h2>
         </div>
         
         <mat-nav-list>

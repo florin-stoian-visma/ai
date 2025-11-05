@@ -15,10 +15,10 @@ export class WidgetLayoutService {
   public layout$: Observable<WidgetConfig[]> = this.layoutSubject.asObservable();
 
   private carpentryDefaultWidgets: WidgetConfig[] = [
-    { id: 'financial-overview', type: 'financial-overview', title: 'Financial Overview', position: 0, visible: true },
-    { id: 'today-overview', type: 'today-overview', title: 'Today Overview', position: 1, visible: true },
+    { id: 'today-overview', type: 'today-overview', title: 'Today Overview', position: 0, visible: true },
+    { id: 'ai-assistant', type: 'ai-assistant', title: 'AI Assistant', position: 1, visible: true },
     { id: 'projects-pipeline', type: 'projects-pipeline', title: 'Projects Pipeline', position: 2, visible: true },
-    { id: 'ai-assistant', type: 'ai-assistant', title: 'AI Assistant', position: 3, visible: true }
+    { id: 'financial-overview', type: 'financial-overview', title: 'Financial Overview', position: 3, visible: true }
   ];
 
   private softwareConsultingDefaultWidgets: WidgetConfig[] = [

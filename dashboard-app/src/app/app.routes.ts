@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'setup',
+    loadComponent: () => import('./features/dashboard/business-confirmation-dialog/business-confirmation-dialog.component').then(m => m.BusinessConfirmationDialogComponent)
+  },
+  {
     path: '',
     loadComponent: () => import('./shared/components/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
     children: [
